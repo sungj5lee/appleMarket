@@ -1,10 +1,12 @@
 package com.example.applemarket
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.databinding.ItemLayoutBinding
+import java.io.File
 
 class MyAdapter(val mItems: MutableList<myItem>) : RecyclerView.Adapter<MyAdapter.Holder>() {
 
@@ -23,7 +25,6 @@ class MyAdapter(val mItems: MutableList<myItem>) : RecyclerView.Adapter<MyAdapte
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
-        val resId=getRe
         holder.iconImageView.setImageResource(mItems[position].aIcon)
         holder.name.text = mItems[position].aProductName
         holder.address.text = mItems[position].aAddress
