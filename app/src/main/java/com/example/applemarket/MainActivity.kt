@@ -1,9 +1,14 @@
 package com.example.applemarket
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applemarket.databinding.ActivityMainBinding
 
@@ -35,6 +40,26 @@ class MainActivity : AppCompatActivity() {
                 val name: String = dataList[position].aProductName
                 Toast.makeText(this@MainActivity," $name 선택!", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        var builder = AlertDialog.Builder(this)
+        onBackPressedDispatcher.addCallback {
+            builder.setTitle("종료")
+            builder.setMessage("정말 종료하시겠습니까?")
+            builder.setIcon(R.drawable.forum)
+
+            val listener = object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    if(p1==DialogInterface.BUTTON_POSITIVE){
+                        finish()
+                    }
+                }
+            }
+
+            builder.setPositiveButton("확인", listener)
+            builder.setNegativeButton("취소", listener)
+
+            builder.show()
         }
     }
 }
