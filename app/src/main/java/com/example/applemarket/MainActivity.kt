@@ -9,6 +9,7 @@ import android.widget.Toast
 import android.window.OnBackInvokedDispatcher
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applemarket.databinding.ActivityMainBinding
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         val adapter=MyAdapter(dataList)
         binding.itemList.adapter=adapter
         binding.itemList.layoutManager=LinearLayoutManager(this)
+        binding.itemList.addItemDecoration(DividerItemDecoration(binding.itemList.getContext(), DividerItemDecoration.VERTICAL))
 
         adapter.itemClick = object : MyAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
