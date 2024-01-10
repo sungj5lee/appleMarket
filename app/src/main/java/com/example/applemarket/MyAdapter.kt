@@ -26,7 +26,7 @@ class MyAdapter(val mItems: MutableList<myItem>) : RecyclerView.Adapter<MyAdapte
         holder.iconImageView.setImageResource(mItems[position].aIcon)
         holder.name.text = mItems[position].aProductName
         holder.address.text = mItems[position].aAddress
-        holder.price.text = mItems[position].aPrice.toString()+"원"
+        holder.price.text = "%,d".format(mItems[position].aPrice)+"원"
     }
 
     override fun getItemId(position: Int): Long {
