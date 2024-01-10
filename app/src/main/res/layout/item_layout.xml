@@ -50,6 +50,7 @@
                 android:textSize="18dp"
                 android:text="김치냉장고"
                 android:maxLines="2"
+                android:ellipsize="end"
                 android:hint="name"
                 />
 
