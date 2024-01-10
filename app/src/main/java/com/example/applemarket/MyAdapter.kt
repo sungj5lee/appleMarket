@@ -1,12 +1,10 @@
 package com.example.applemarket
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.databinding.ItemLayoutBinding
-import java.io.File
 
 class MyAdapter(val mItems: MutableList<myItem>) : RecyclerView.Adapter<MyAdapter.Holder>() {
 
