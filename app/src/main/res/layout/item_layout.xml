@@ -15,7 +15,7 @@
         >
 
         <ImageView
-            android:id="@+id/icItem"
+            android:id="@+id/imgItem"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_vertical"
@@ -87,11 +87,13 @@
                 android:layout_height="wrap_content"
                 >
                 <ImageView
+                    android:id="@+id/icComment"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/forum"
                     />
                 <TextView
+                    android:id="@+id/textComments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -102,11 +104,13 @@
                     android:paddingEnd="2dp"
                     />
                 <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/favorite"
-                />
+                    android:id="@+id/icLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/favorite"
+                    />
                 <TextView
+                    android:id="@+id/textLikes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"

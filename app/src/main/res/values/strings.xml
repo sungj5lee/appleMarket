@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">appleMarket</string>
+    <string name="mannertemp"><u>매너온도</u></string>
 </resources>

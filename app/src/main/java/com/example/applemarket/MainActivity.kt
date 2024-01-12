@@ -1,7 +1,18 @@
 package com.example.applemarket
 
+import android.Manifest
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.media.AudioAttributes
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +20,9 @@ import android.widget.Toast
 import android.window.OnBackInvokedDispatcher
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applemarket.databinding.ActivityMainBinding
@@ -37,11 +51,18 @@ class MainActivity : AppCompatActivity() {
         binding.itemList.layoutManager=LinearLayoutManager(this)
         binding.itemList.addItemDecoration(DividerItemDecoration(binding.itemList.getContext(), DividerItemDecoration.VERTICAL))
 
+
         adapter.itemClick = object : MyAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
-                val name: String = dataList[position].aProductName
-                Toast.makeText(this@MainActivity," $name 선택!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@MainActivity, SideActivity::class.java).apply {
+                    putExtra("itemInfo", dataList[position])
+                }
+                startActivity(intent)
             }
+        }
+
+        binding.icNoti.setOnClickListener {
+            showNotification()
         }
 
         var builder = AlertDialog.Builder(this)
@@ -63,5 +84,77 @@ class MainActivity : AppCompatActivity() {
 
             builder.show()
         }
+    }
+
+    private val myNotificationID = 1
+    private val channelID = "default"
+
+    private fun showNotification(){
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Android 8.0
+            val channel = NotificationChannel(channelID, "default channel",
+                NotificationManager.IMPORTANCE_DEFAULT)
+            channel.description = "description text of this channel."
+            notificationManager.createNotificationChannel(channel)
+        }
+        val builder = NotificationCompat.Builder(this, channelID)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("title")
+            .setContentText("notification text")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        notificationManager.notify(myNotificationID, builder.build())
+    }
+
+    fun notification(){
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val builder: NotificationCompat.Builder
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channelId="one-channel"
+            val channelName="My Channel One"
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "My Channel One Description"
+                setShowBadge(true)
+                val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                val audioAttributes = AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build()
+                setSound(uri, audioAttributes)
+                enableVibration(true)
+            }
+            manager.createNotificationChannel(channel)
+
+            builder = NotificationCompat.Builder(this, channelId)
+
+        }else {
+            builder = NotificationCompat.Builder(this)
+        }
+
+        builder.run {
+            setSmallIcon(R.mipmap.ic_launcher)
+            setWhen(System.currentTimeMillis())
+            setContentTitle("키워드 알림")
+            setContentText("설정한 키워드에 대한 알림이 도착했습니다!!")
+        }
+        manager.notify(11, builder.build())
     }
 }

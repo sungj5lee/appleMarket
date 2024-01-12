@@ -27,6 +27,8 @@ class MyAdapter(val mItems: MutableList<myItem>) : RecyclerView.Adapter<MyAdapte
         holder.name.text = mItems[position].aProductName
         holder.address.text = mItems[position].aAddress
         holder.price.text = "%,d".format(mItems[position].aPrice)+"원"
+        holder.likes.text = mItems[position].aLikes.toString()
+        holder.comment.text = mItems[position].aCommentNum.toString()
     }
 
     override fun getItemId(position: Int): Long {
@@ -38,9 +40,11 @@ class MyAdapter(val mItems: MutableList<myItem>) : RecyclerView.Adapter<MyAdapte
     }
 
     inner class Holder(val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        val iconImageView = binding.icItem
+        val iconImageView = binding.imgItem
         val name = binding.textName
         val address = binding.textAddress
         val price = binding.textPrice
+        val likes = binding.textLikes
+        val comment = binding.textComments
     }
 }
